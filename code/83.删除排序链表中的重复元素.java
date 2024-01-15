@@ -5,6 +5,7 @@
  */
 
 // @lc code=start
+
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -17,24 +18,17 @@
  */
 class Solution {
     public ListNode deleteDuplicates(ListNode head) {
-        // 遍历链表删除元素
-        if (head == null) {
-            return head;
-        }
-        ListNode temp = head;
-        ListNode temp2 = head;
-        while (temp2.next != null) {
-            if (temp2.next.val != temp2.val) {
-                temp.next = temp2.next;
-                temp = temp2.next;
-                temp2 = temp2.next;
+        Stack<ListNode> stk = new Stack<>();
+        while (head != null) {
+            if ((stk.peek()).val != head.val) {
+                stk.push(head);
             } else {
-                temp2 = temp2.next;
-                if (temp2.next == null) {
-                    temp.next = null;
-                    return head;
-                }
+                head = head.next;
             }
+        }
+        while (!stk.isEmpty()) {
+            head.next = stk.pop();
+            head = stk.pop();
         }
         return head;
     }
